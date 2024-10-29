@@ -4,55 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Clown</title>
+    <link rel="icon" href="static/images/crypto-clown-smiling.png" type="image/png"> <!-- Favicon Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&family=Patrick+Hand&family=Creepster&display=swap" rel="stylesheet">
     <style>
-        body {
+        body, html {
             margin: 0;
+            padding: 0;
             font-family: 'Patrick Hand', cursive;
             color: #000;
             text-align: center;
             overflow-x: hidden;
-            transition: background-color 0.5s;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+            scroll-behavior: smooth; /* Enable smooth scrolling */
         }
 
-        /* Sekcija 1: Prva stran */
-        #home {
+        /* Fullscreen section styling */
+        section {
             position: relative;
             height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             overflow: hidden;
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity */
         }
 
-        #home::before {
-            content: '';
+        /* Home section */
+        #home {
+            background-image: url("static/images/scary-circus.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* About Us section */
+        #about {
+            background-image: url("static/images/about-us-background.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Blurred background overlay */
+        #home::before, #about::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url("static/images/scary-circus.jpg");
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px);
-            z-index: 1;
+            background: inherit; /* Inherit the background image */
+            filter: blur(5px); /* Apply blur effect */
+            z-index: 1; /* Ensure it stays behind the content */
         }
 
+        /* Logo styling */
         .logo {
             max-width: 120px;
             transition: transform 0.05s ease-in-out;
             cursor: pointer;
-            z-index: 2;
+            z-index: 2; /* Make sure the logo is above the blurred background */
         }
 
+        /* Social media icons */
         .social-icons {
             position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 2;
+            z-index: 2; /* Above the blurred background */
         }
 
         .social-icons img {
@@ -66,10 +88,10 @@
             transform: scale(1.1);
         }
 
-        /* Gumbi za navigacijo */
+        /* Navigation buttons */
         .nav-buttons {
-            margin-top: 80px; /* Razmak med logotipom in gumbi, povečano za več prostora */
-            z-index: 2; /* Zaslon nad zamegljeno sliko */
+            margin-top: 150px;
+            z-index: 2; /* Above the blurred background */
         }
 
         .nav-button {
@@ -78,63 +100,70 @@
             padding: 15px 30px;
             border-radius: 5px;
             font-size: 18px;
-            color: #fff; /* Barva besedila */
-            background-color: transparent; /* Prosojno ozadje */
+            color: #fff;
+            background-color: transparent;
             cursor: pointer;
-            text-decoration: none; /* Odstranitev podčrtanja */
-            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s; /* Prehod za barvo ozadja in barvo besedila */
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .about-button {
-            background-color: #6a5acd; /* Vijolično ozadje */
-            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.5); /* 3D učinek */
+            background-color: #6a5acd;
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.5);
         }
 
         .contact-button {
-            background-color: #1e90ff; /* Modro ozadje */
-            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.5); /* 3D učinek */
+            background-color: #1e90ff;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.5);
         }
 
         .nav-button:hover {
-            color: #000; /* Barva besedila ob hoverju */
-            background-color: #fff; /* Bela barva ozadja ob hoverju */
+            color: #000;
+            background-color: #fff;
         }
 
         .nav-button:active {
-            transform: scale(0.95); /* Animacija ob kliku */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Zmanjšanje sence ob kliku */
+            transform: scale(0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
-        /* Sekcija 2: About Us */
-        #about {
-            height: 100vh;
+        /* Styled text box in About Us section */
+        .about-content {
             display: flex;
-            justify-content: center;
+            flex-direction: row;
             align-items: center;
-            flex-direction: column;
-            padding: 20px;
-            background-image: url("static/images/about-us-background.jpg");
-            background-size: cover;
-            background-position: center;
-            color: #000;
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2; /* Above the blurred background */
         }
 
-        .about-us-text {
-            font-size: 40px;
-            text-align: center;
-            color: #000;
+        .about-us-box {
+            background-color: #6a5acd;
+            padding: 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: left;
+            width: 50%;
+            max-width: 500px;
             font-family: 'Rubik Wet Paint', cursive;
-            max-width: 800px;
+            font-size: 1.5rem;
         }
 
-        /* Sekcija 3: Contact */
-        #contact {
-            height: 100vh;
+        .about-us-image {
+            width: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            padding: 20px;
+        }
+
+        .about-us-image img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Contact section */
+        #contact {
             background-image: url("static/images/scary-clown.gif");
             background-size: cover;
             background-position: center;
@@ -142,32 +171,39 @@
         }
 
         #contact h1, #contact p {
-            font-size: 40px;
-            color: #ff0000;
+            font-size: 2rem;
+            color: #1e90ff;
             font-family: 'Rubik Wet Paint', cursive;
         }
 
         .contact a {
-            color: #ff0000;
+            color: #1e90ff;
             font-family: 'Rubik Wet Paint', cursive;
-            font-size: 40px;
+            font-size: 2rem;
         }
 
         /* Responsive styles */
         @media (max-width: 768px) {
-            .nav-button {
-                font-size: 16px; /* Manjša velikost besedila na mobilnih napravah */
-            }
             .logo {
-                max-width: 100px; /* Manjša širina logotipa na mobilnih napravah */
+                max-width: 80px;
+            }
+            .about-us-box, #contact h1, #contact p, .contact a {
+                font-size: 1.5rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .about-us-box, .about-us-image {
+                width: 100%;
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Prva stran z ozadjem in klovnom -->
-    <div id="home">
+    <!-- Home section -->
+    <section id="home">
         <div class="social-icons">
             <a href="https://twitter.com/cryptoclownweb3" target="_blank" aria-label="Twitter">
                 <img src="static/images/x-icon.png" alt="Twitter Icon">
@@ -177,31 +213,38 @@
             </a>
         </div>
         <img src="static/images/crypto-clown-serious.png" alt="Crypto Clown Logo" class="logo" id="logo">
-        <h1>Welcome to the Crypto Clown</h1>
 
-        <!-- Gumbi za navigacijo -->
+        <!-- Navigation buttons -->
         <div class="nav-buttons">
             <a href="#about" class="nav-button about-button">About Us</a>
             <a href="#contact" class="nav-button contact-button">Contact</a>
         </div>
-    </div>
+    </section>
 
-    <!-- Sekcija "About Us" -->
-    <div id="about">
-        <div class="about-us-text">
-            <p>We are a group of crypto enthusiasts on a mission to find the next big thing. After years of searching and designing, we’ve perfected what cool design and websites look like.</p>
-            <p>If you're launching a new coin, we can create a website for you or help with design.</p>
+    <!-- About Us section -->
+    <section id="about">
+        <div class="about-content">
+            <!-- Text Box -->
+            <div class="about-us-box">
+                <h1>About us</h1>
+                <p>We are a group of crypto enthusiasts on a mission to find the next big thing. After years of searching and designing, we’ve perfected what cool design and websites look like.</p>
+                <p>If you're launching a new coin, we can create a website for you or help with design.</p>
+            </div>
+            <!-- Image Box -->
+            <div class="about-us-image">
+                <img src="static/images/crypto-clown-smiling.png" alt="Crypto Clown Smiling">
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Sekcija "Contact" -->
-    <div id="contact">
+    <!-- Contact section -->
+    <section id="contact">
         <h1>Contact</h1>
         <p>For more information, you can contact us at:</p>
         <p>Email: web.cryptoclown@gmail.com</p>
         <p>Follow us on X:
             <a href="https://x.com/cryptoclownweb3" target="_blank" aria-label="X">
-                <i class="fab fa-x" style="font-size: 24px; color: #ff0000; margin-left: 10px;"></i>
+                    <img src="static/images/x-icon.png" alt="X Icon" style="width: 30px; margin-left: 10px;">
             </a>
         </p>
         <p>Telegram:
@@ -209,7 +252,7 @@
                 <img src="static/images/telegram-icon.png" alt="Telegram Icon" style="width: 30px; margin-left: 10px;">
             </a>
         </p>
-    </div>
+    </section>
 
     <audio id="laughter-audio" src="static/sounds/laughter.mp3" preload="auto"></audio>
 
